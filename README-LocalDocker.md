@@ -1,11 +1,23 @@
 # Local Demos
 
+## Pre-Reqs
+
+1. [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+
 ## Docker based DB Setup
 
 1. Create a cluster
 
     ```bash
     yb-docker-ctl create --rf 3 --tag 2.15.2.1-b1 \
+      --tserver_flags="cql_nodelist_refresh_interval_secs=1" \
+      --master_flags="tserver_unresponsive_timeout_ms=1000"
+    ```
+
+    (On M1 Mac)
+
+    ```bash
+     DOCKER_DEFAULT_PLATFORM=linux/amd64 yb-docker-ctl create --rf 3 --tag 2.15.2.1-b1 \
       --tserver_flags="cql_nodelist_refresh_interval_secs=1" \
       --master_flags="tserver_unresponsive_timeout_ms=1000"
     ```
@@ -96,6 +108,12 @@
 
     ```bash
     yb-docker-ctl add_node
+    ```
+
+     (M1 Mac)
+
+    ```bash
+    DOCKER_DEFAULT_PLATFORM=linux/amd64 yb-docker-ctl add_node
     ```
 
     (Admin UI)
