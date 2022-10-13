@@ -60,7 +60,7 @@
 
 1. Let's play [SQL](https://docs.yugabyte.com/preview/quick-start/explore/ysql/) -- Choose **Kubernetes**
 
-    To exit type `exit` or `\q` and `enter/return`
+    To exit type `exit` or `\q` and `enter/return` OR `Ctrl+D`
 
 1. Run Sample SQL
 
@@ -79,5 +79,15 @@
 1. Lets cause an node outage
 
     ```bash
-    kubectl scale
+    kubectl scale statefulset -n yb-demo yb-tserver --replicas 2
     ```
+
+    (Observe app)
+
+1. Lets restore the cluter
+
+    ```bash
+    kubectl scale statefulset -n yb-demo yb-tserver --replicas 3
+    ```
+
+    (Observe app)
