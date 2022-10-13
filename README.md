@@ -26,19 +26,20 @@
     helm repo update
     ```
 
-1. Search for latest version
+2. Search for latest version
 
   ```bash
   helm search repo yugabytedb/yugabyte -l
   ```
 
-1. Create a namespace
+3. Create a namespace
+
 
     ```bash
     kubectl create namespace yb-demo
     ```
 
-1. Create 3 node cluster
+4. Create 3 node cluster
 
     ```bash
       helm install yb-demo yugabytedb/yugabyte \
@@ -51,18 +52,23 @@
         --set replicas.tserver=3 \
         --namespace yb-demo
     ```
+5. Get UI address
 
-1. Run SQL Shell
+    ```bash
+     kubectl  -n yb-demo get svc
+     ```
+
+6. Run SQL Shell
 
     ```bash
     kubectl exec -it  -n yb-demo yb-tserver-0 -c yb-tserver -- ysqlsh -h yb-tserver-0
     ```
 
-1. Let's play [SQL](https://docs.yugabyte.com/preview/quick-start/explore/ysql/) -- Choose **Kubernetes**
+7. Let's play [SQL](https://docs.yugabyte.com/preview/quick-start/explore/ysql/) -- Choose **Kubernetes**
 
     To exit type `exit` or `\q` and `enter/return` OR `Ctrl+D`
 
-1. Run Sample SQL
+8. Run Sample SQL
 
     ```bash
      kubectl run yb-sample-apps \
@@ -76,7 +82,7 @@
       --nodes yb-tserver-0.yb-tservers:5433,yb-tserver-1.yb-tservers:5433,yb-tserver-0.yb-tservers:5433
     ```
 
-1. Lets cause an node outage
+9.  Lets cause an node outage
 
     ```bash
     kubectl scale statefulset -n yb-demo yb-tserver --replicas 2
@@ -84,10 +90,16 @@
 
     (Observe app)
 
-1. Lets restore the cluter
+10. Lets restore the cluter
 
     ```bash
     kubectl scale statefulset -n yb-demo yb-tserver --replicas 3
     ```
 
     (Observe app)
+
+11. Let upgrade our cluster
+
+    ```bash
+
+    ```
